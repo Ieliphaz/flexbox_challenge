@@ -1,0 +1,254 @@
+/* ===============================
+   GLOBAL RESET + BASE STYLING
+   =============================== */
+
+/* Reset browser defaults and ensure consistent sizing */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex; /* Enables flex layout for header, main, footer vertically */
+  flex-direction: column; /* Stacks them in a column (vertical layout) */
+  min-height: 100vh; /* Ensures full viewport height */
+  font-family: Arial, sans-serif;
+  background: #f7f7f7;
+  line-height: 1.6;
+}
+
+main {
+  flex: 1; /* Allows main content to grow and fill remaining height (push footer down) */
+}
+
+
+/* ===============================
+   HEADER + NAVIGATION
+   =============================== */
+
+header {
+  display: flex; /* Enables flexible layout for logo and navigation */
+  justify-content: space-between; /* Pushes logo left and nav right */
+  align-items: center; /* Centers vertically */
+  flex-wrap: wrap; /* Allows wrapping on small screens */
+  background: #0077ff;
+  color: white;
+  padding: 1rem 2rem;
+}
+
+nav {
+  display: flex; /* Displays nav links in a row */
+  gap: 1.5rem; /* Adds space between each link */
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  transition: opacity 0.3s ease;
+}
+
+nav a:hover {
+  opacity: 0.8;
+}
+
+
+/* ===============================
+   MAIN CONTAINER (SIDEBAR + CARDS)
+   =============================== */
+
+.container {
+  display: flex; /* Creates a horizontal flexbox layout for sidebar + main */
+  gap: 1.5rem; /* Adds space between sidebar and cards area */
+  align-items: flex-start; /* Aligns both items from the top edge */
+  padding: 1.5rem;
+}
+
+
+/* ===============================
+   SIDEBAR AREA
+   =============================== */
+
+.sidebar {
+  flex: 0 0 200px; /* 
+    flex-grow: 0 → Sidebar won't grow
+    flex-shrink: 0 → Sidebar won't shrink
+    flex-basis: 200px → Sidebar fixed width of 200px
+  */
+  position: fixed; /* Keeps sidebar visible even when scrolling */
+  background: #e0e0e0;
+  padding: 1rem;
+  border-radius: 8px;
+  top: 6rem; /* Distance from top (below header) */
+  left: 1rem; /* Anchored to left side */
+  height: calc(100vh - 7rem); /* Sidebar fills most of the screen height */
+  overflow-y: auto; /* Adds scrollbar when content is taller than sidebar */
+}
+
+.sidebar ul {
+  list-style: none;
+}
+
+.sidebar li {
+  margin-bottom: 1rem;
+}
+
+.sidebar a {
+  display: block; /* Makes the entire link area clickable */
+  color: #0077ff;
+  text-decoration: none;
+  padding: 0.3rem 0;
+}
+
+.sidebar a:hover {
+  text-decoration: underline;
+}
+
+
+/* ===============================
+   MAIN CONTENT (CARD GRID)
+   =============================== */
+
+.card-area {
+  display: flex; /* Enables flex layout for card grid */
+  flex-wrap: wrap; /* Allows cards to wrap to next line on smaller screens */
+  gap: 1.5rem; /* Adds space between cards */
+  flex: 1; /* Allows the card area to expand and fill space next to sidebar */
+  margin-left: 230px; /* Pushes main content right to prevent overlap with sidebar */
+}
+
+.card {
+  background: #fff;
+  flex: 1 1 30%; /* 
+    flex-grow: 1 → Each card can grow equally
+    flex-shrink: 1 → Cards can shrink if needed
+    flex-basis: 30% → Default width per card before wrapping
+  */
+  display: flex; /* Enables vertical stacking for card content */
+  flex-direction: column; /* Places image, title, text, and button vertically */
+  border-radius: 10px;
+  box-shadow: 0 5px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card-image img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover; /* Ensures image fits perfectly without distortion */
+}
+
+.card h3 {
+  margin: 1rem;
+}
+
+.card p {
+  flex-grow: 1; /* Allows text to take remaining vertical space (pushes button down) */
+  margin: 0 1rem 1rem;
+}
+
+.card button {
+  align-self: center; /* Centers button horizontally inside flex column */
+  margin-bottom: 1rem;
+  padding: 0.5rem 1rem;
+  background: #0077ff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.card button:hover {
+  background: #0055cc;
+}
+
+
+/* ===============================
+   SECTION CONTENT BELOW
+   =============================== */
+
+section {
+  margin-left: 230px; /* Same as sidebar width + small offset */
+  margin-bottom: 50px;
+  padding: 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+
+/* ===============================
+   FOOTER
+   =============================== */
+
+footer {
+  text-align: center;
+  padding: 1rem;
+  background: #0077ff;
+  color: white;
+  margin-top: 2rem;
+}
+
+
+/* ===============================
+   RESPONSIVE BEHAVIOR
+   =============================== */
+   @media (max-width: 600px) {
+  header {
+    flex-direction: column; /* Stack title and nav vertically */
+    align-items: flex-start; /* Align to left edge for cleaner layout */
+  }
+}
+
+@media (max-width: 600px) {
+  .container {
+    flex-direction: column; /* Stacks sidebar and cards vertically */
+  }
+
+  .card-area {
+    margin-left: 0; /* Removes sidebar offset on small screens */
+    order: 1; /* Shows cards before sidebar */
+  }
+
+  .sidebar {
+    position: static; /* Stops being fixed */
+    width: 100%; /* Full width on small screens */
+    margin-top: 1rem;
+    order: 2; /* Sidebar appears after main content */
+  }
+
+  .card {
+    flex: 1 1 100%; /* One card per row for mobile */
+  }
+
+  section {
+    margin-left: 0; /* Removes sidebar offset for mobile */
+  }
+}
+
+
+/* ===============================
+   FLEXBOX GOTCHA AND REFERENCES
+   ===============================
+
+   Common Flexbox Pitfalls:
+   - Without proper flex-shorthand (flex: grow shrink basis), 
+     elements might stretch or collapse unpredictably.
+   -Fixed sidebars can overlap the the sections content when scrolling if not handled correctly.
+   How to handle:
+   - Always use flex-wrap: wrap for responsive card grids, and set a flex-shorthand:flex-grow,flex-shrink, flex-basis for predictable sizing.
+   -Use margin to avoid overlap with fixed elements.
+   -Always consider the layout on different screen sizes and design accordingly
+
+   📘 References:
+   - https://css-tricks.com/snippets/css/a-guide-to-flexbox/
+   - https://flexboxfroggy.com/
+   - https://www.w3schools.com/css/css3_flexbox.asp
+   =============================== */
