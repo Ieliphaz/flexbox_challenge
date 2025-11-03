@@ -22,22 +22,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 👉 OPTIONAL: uncomment if your project has dependencies
-      # - name: Install dependencies
-      #   run: npm ci
-
-      # - name: Build static files
-      #   run: npm run build
-
       # ✅ Upload only the folder that contains your HTML files
       - name: Upload built site
         uses: actions/upload-pages-artifact@v3
         with:
-          name: my-pages-artifact      # Unique name to avoid conflict
-          path: .                      # Change to ./dist or ./build if you have a build step
+          name: my-pages-artifact-${{ github.run_id }}   # ✅ unique per run
+          path: .                                        # or ./dist or ./build if needed
 
   deploy:
-    needs: build                      # Wait until build job finishes
+    needs: build
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -47,5 +40,4 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
         with:
-          artifact_name: my-pages-artifact
-
+          artifact_name: my-pages-artifact-${{ github.run_id }}  # ✅ must match above
